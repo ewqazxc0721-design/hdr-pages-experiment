@@ -99,7 +99,15 @@ function renderResults(){
   }
   $('summary').textContent=`本次记录 ${Object.keys(active().observations).length}/54 格，初筛候选 ${candidates} 格。候选仅适用于本试次条件，尚未证明跨平台或不同亮度下稳定。`;
 }
-function download(text,type,name){const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}
+let exportUrl=null;
+function download(text,type,name){
+  if(exportUrl)URL.revokeObjectURL(exportUrl);
+  exportUrl=URL.createObjectURL(new Blob([text],{type}));
+  const link=$('export-download');link.href=exportUrl;link.download=name;link.textContent=`下载 ${name}`;
+  $('export-text').value=text;$('export-panel').hidden=false;$('export-status').textContent='已生成完整导出内容，包含历史与当前试次。';
+  link.click();$('export-panel').scrollIntoView({behavior:'auto'});
+}
+$('copy-export').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('export-text').value);$('export-status').textContent='已复制完整内容。';}catch{$('export-text').select();$('export-status').textContent='请长按或使用系统复制命令保存已选中的内容。';}});
 function allTrials(){return [...store.trials,active()].map(t=>({...t,cells:Object.values(t.observations),observations:undefined}));}
 function exportCsv(){
   const columns=['trial_id','created_at','profile',...Object.keys(getEnv()),'id','bg_nit','text_nit','screen_score','shot_delta_y','y_bg','y_text','zoom_readable','enhanced_readable','delta_threshold','conclusion','cell_notes','mode','orientation','DPR','viewport','screenshot_file','analysis_details'];

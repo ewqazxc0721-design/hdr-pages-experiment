@@ -6,7 +6,8 @@
     "logic": "linear luminance, HDR exclusion, unreadable-source exclusion, zero-contrast controls, unknown Android version and CSV escaping passed",
     "browser": "Windows Codex in-app Chromium 153: all 54 AVIF images decoded, three view modes, cell selection, environment lock and trial history verified",
     "mobile_layout": "390x844 emulated viewport: horizontal matrix scroll, no document horizontal overflow",
-    "screenshot_analysis": "synthetic 480x160 white SDR PNG: Y_bg=255, Y_text=255, delta=0; not a physical capture result"
+    "screenshot_analysis": "synthetic 480x160 white SDR PNG: Y_bg=255, Y_text=255, delta=0; not a physical capture result",
+    "records_and_export": "reload retains trial history; JSON preview contains 2 synthetic trials / 2 records; CSV preview contains header and 2 records. Automatic download completion not observable in the in-app browser; explicit download link and copy fallback provided."
   },
   "physical_results": [
     {
