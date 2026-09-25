@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>HDR Screenshot Collapse Lab</title>
+<style>
+:root{font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#090909;color:#eee}
+*{box-sizing:border-box}body{margin:0;padding:14px}main{max-width:900px;margin:auto}
+h1{font-size:24px;margin:4px 0 5px}.muted{color:#aaa;font-size:13px}.card{background:#19191b;border:1px solid #29292c;border-radius:15px;padding:13px;margin:12px 0}
+.warn{background:#3a3014;border-radius:10px;padding:10px 12px;font-size:13px}
+img{display:block;width:100%;height:auto;border-radius:9px;background:white}
+.no-limit{dynamic-range-limit:no-limit}.standard{dynamic-range-limit:standard}
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;background:#303034;font-size:12px;margin-bottom:7px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+pre{white-space:pre-wrap;background:#101012;padding:9px;border-radius:8px;font-size:12px}
+.sdrbox{background:#cbcbcb;color:#fff;border-radius:9px;padding:18px;font-size:24px;font-weight:800}
+@media(min-width:800px){.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body><main>
+<h1>HDR → SDR Screenshot Collapse Lab</h1>
+<div class="muted">Safari 真机实验 · 目标：寻找“原屏清晰、SDR 截图不可读”的亮度窗口。</div>
+<div id="diag"></div>
+
+<div class="warn">
+<b>测试前：</b>iPhone 设置 → 通用 → 屏幕捕捉 → 格式 → <b>SDR</b>。然后必须用 Safari 直接打开这个 HTTPS 页面。
+</div>
+
+<section class="card">
+<span class="badge">A · HDR / no-limit</span>
+<p>真正的 10-bit PQ / BT.2020 AVIF。背景固定约 203 nit；文字从 203 nit 扫到 1000 nit。</p>
+<img class="no-limit" src="./assets/hdr-pq-test.avif" alt="HDR luminance sweep">
+</section>
+
+<section class="card">
+<span class="badge">B · 同一 HDR 文件 / standard</span>
+<p>同一个 AVIF，但要求 WebKit 把动态范围限制到 standard。用于和 A 肉眼比较。</p>
+<img class="standard" src="./assets/hdr-pq-test.avif" alt="SDR constrained luminance sweep">
+</section>
+
+<section class="card">
+<span class="badge">C · 普通 SDR 基准</span>
+<p>下面不是 HDR，只用普通网页颜色。它用于确认截图、缩放和字体本身没有异常。</p>
+<div class="sdrbox">SDR 基准：明天八点门口见</div>
+</section>
+
+<section class="card">
+<h2>判定</h2>
+<p>只记录同时满足以下条件的亮度档：</p>
+<ol>
+<li>A 在 iPhone 原屏上无需费力即可阅读；</li>
+<li>B 明显比 A 弱，证明 HDR headroom 确实参与显示；</li>
+<li>系统 SDR 截图的 A 中，同一档文字消失或严重接近背景；</li>
+<li>把截图放大后仍无法恢复。</li>
+</ol>
+<p class="muted">如果截图中的 A 与原屏观感基本一致，则 HDR 路线淘汰。若只在某个范围出现坍缩，下一轮再围绕该范围做更细的 nit 扫描。</p>
+</section>
+
+<script>
+const mq = window.matchMedia?.("(dynamic-range: high)");
+const diag = {
+  dynamicRangeHigh: mq ? mq.matches : "unsupported",
+  devicePixelRatio: window.devicePixelRatio,
+  viewport: `${innerWidth} × ${innerHeight}`,
+  userAgent: navigator.userAgent
+};
+document.getElementById("diag").innerHTML =
+  `<pre>dynamic-range: high = ${diag.dynamicRangeHigh}
+devicePixelRatio = ${diag.devicePixelRatio}
+viewport = ${diag.viewport}
+UA = ${diag.userAgent}</pre>`;
+</script>
+</main></body></html>
