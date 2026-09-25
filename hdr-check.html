@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark"><title>iPhone HDR 隔离测试 · flow-2</title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 system-ui,-apple-system,sans-serif;background:#090909;color:#eee}
+*{box-sizing:border-box}body{margin:0;padding:14px}main{max-width:720px;margin:auto}h1{font-size:23px;margin:8px 0}p{margin:10px 0}a{color:#a9cbff}label{display:block;margin:12px 0}select,button{font:inherit;color:#fff;background:#334361;border:1px solid #657796;border-radius:8px;padding:10px;max-width:100%;min-height:44px}select{display:block;width:100%;margin-top:5px}button{margin:4px 8px 8px 0}.muted{font-size:13px;color:#aaa}pre{font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}#status{padding:8px 0}#test-host{margin:12px 0}#test-image{display:block;width:100%;height:auto;dynamic-range-limit:no-limit}#test-image.standard{dynamic-range-limit:standard}
+/* Only the explicit scroll control uses nested compositing. Both layouts keep identical image width. */
+#test-host.scroll{overflow:auto}#test-host.scroll .test-row{width:calc(100% + 40px)}#test-host.scroll .test-card{width:calc(100% - 40px);border-radius:10px;overflow:hidden}
+</style>
+<script src="hdr-check.js?v=flow-2" defer></script>
+</head>
+<body><main>
+<a href="./matrix.html?v=flow-2">返回已调整的矩阵</a>
+<h1>先确认 HDR 亮度变化</h1>
+<p class="muted">flow-2 · 一次只显示一张图。先测新版 B9，再换旧图；保持手机亮度不变。</p>
+<label>测试素材<select id="asset"><option value="matrix">新版 B9 · 背景 203 / 文字 1000 nit</option><option value="legacy">旧版 · 你已确认能显示 HDR 的原文件</option></select></label>
+<label>显示布局<select id="layout"><option value="plain">普通页面 · 无内部滚动框</option><option value="scroll">滚动容器 · 复现旧矩阵的可疑路径</option></select></label>
+<button id="toggle" aria-pressed="false">切换到 SDR</button><button id="reload">按当前模式重新载入</button>
+<p id="status" role="status">正在加载……</p>
+<div id="test-host"><div class="test-row"><div class="test-card"><img id="test-image" alt="HDR 测试素材"></div></div></div>
+<p class="muted">看文字的亮度，不只看白色背景。切换按钮只改变同一张图的动态范围限制；若无变化，再点“按当前模式重新载入”，检查是否只在切换时失效。</p>
+<details><summary>如何判断结果</summary><ul>
+<li>普通页面有变化、滚动容器无变化：支持滚动合成路径是原因。</li>
+<li>旧图在普通页面正常、新版 B9 在普通页面无变化：应继续查新版 AVIF 的 Apple 解码兼容性。</li>
+<li>重新载入后才有变化：应继续查动态范围切换后的重绘问题。</li>
+</ul><p>这些对照用于缩小问题范围；网页诊断无法读取屏幕实际 HDR 亮度。</p></details>
+<details><summary>诊断信息</summary><pre id="diagnostics"></pre><button id="copy">复制诊断信息</button><span id="copy-status" role="status"></span></details>
+</main></body></html>

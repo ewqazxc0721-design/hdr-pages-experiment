@@ -1,6 +1,7 @@
 import { detectPlatform, profileFor, candidateStatus, analyzePixels, csvValue } from './matrix-core.mjs';
 const $ = id => document.getElementById(id);
 const KEY='hdr-calibration-matrix-v1';
+const DISPLAY_REVISION='flow-2';
 const envForm=$('environment-form'), cellForm=$('cell-form');
 const settingNames={auto_brightness:'自动亮度',low_power:'低电量模式',night_shift:'夜览 / 护眼',true_tone:'原彩 / 自适应色彩',system_theme:'系统主题'};
 for(const [name,label] of Object.entries(settingNames)){
@@ -18,7 +19,7 @@ const environment=()=>Object.fromEntries(new FormData(envForm));
 const ua=navigator.userAgent;
 const mq=matchMedia('(dynamic-range: high)');
 const supports={noLimit:CSS.supports('dynamic-range-limit','no-limit'),standard:CSS.supports('dynamic-range-limit','standard')};
-function makeTrial(env){return {schema_version:1,trial_id:crypto.randomUUID(),created_at:new Date().toISOString(),profile:profileFor(env),protocol:'matrix-v1',environment:env,observations:{}};}
+function makeTrial(env){return {schema_version:1,trial_id:crypto.randomUUID(),created_at:new Date().toISOString(),profile:profileFor(env),protocol:'matrix-v1',display_revision:DISPLAY_REVISION,environment:env,observations:{}};}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(store));$('save-status').textContent='已自动保存在本浏览器。截图不保存、不上传；请导出 JSON / CSV 留档。';}catch{$('save-status').textContent='本地保存不可用或空间不足，请立即导出记录。';}}
 function getEnv(){return active().environment;}
 function syncEnvironment(){
@@ -34,6 +35,9 @@ function renderProfile(){
 }
 function updateDiagnostics(){
   diag={userAgent:ua,userAgentData:hints,platformGuess:detectPlatform(ua,hints,navigator.maxTouchPoints),profile:active()?.profile,dynamicRangeHigh:mq.matches,videoDynamicRangeHigh:matchMedia('(video-dynamic-range: high)').matches,supports,DPR:devicePixelRatio,viewport:{width:innerWidth,height:innerHeight},orientation:innerWidth>innerHeight?'landscape':'portrait',visualViewportScale:window.visualViewport?.scale??null,matrixRowFilter:$('row-filter').value,matrixSampleWidth:Number($('sample-size').value),contentLayout:active()?.environment.content_layout,actualHDROutput:'unverified; requires user A/B observation',imageErrors:[...document.querySelectorAll('#matrix img')].filter(i=>i.complete&&!i.naturalWidth).map(i=>i.dataset.cell)};
+  diag.displayRevision=DISPLAY_REVISION;
+  diag.imageStyles=[...document.querySelectorAll('#matrix img, #focus-samples img')].filter(i=>i.getClientRects().length).slice(0,9).map(i=>({cell:i.dataset.cell,dynamicRangeLimit:getComputedStyle(i).getPropertyValue('dynamic-range-limit'),width:i.getBoundingClientRect().width,ancestorOverflow:getComputedStyle(i.parentElement).overflow}));
+  diag.matrixOverflow=getComputedStyle(document.querySelector('.matrix-scroll')).overflow;
   $('diagnostics').textContent=JSON.stringify(diag,null,2);
   $('capability').textContent=`dynamic-range: high = ${mq.matches} · no-limit ${supports.noLimit?'支持':'不支持'} / standard ${supports.standard?'支持':'不支持'}。${diag.imageErrors.length?'部分图片加载失败，请刷新。':'能力报告不代表实际 HDR 已显示。'}`;
   const images=[...document.querySelectorAll('#matrix img')];
@@ -110,7 +114,7 @@ function download(text,type,name){
 $('copy-export').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('export-text').value);$('export-status').textContent='已复制完整内容。';}catch{$('export-text').select();$('export-status').textContent='请长按或使用系统复制命令保存已选中的内容。';}});
 function allTrials(){return [...store.trials,active()].map(t=>({...t,cells:Object.values(t.observations),observations:undefined}));}
 function exportCsv(){
-  const columns=['trial_id','created_at','profile',...Object.keys(getEnv()),'id','bg_nit','text_nit','screen_score','shot_delta_y','y_bg','y_text','zoom_readable','enhanced_readable','delta_threshold','conclusion','cell_notes','mode','orientation','DPR','viewport','screenshot_file','analysis_details'];
+  const columns=['trial_id','created_at','profile','display_revision',...Object.keys(getEnv()),'id','bg_nit','text_nit','screen_score','shot_delta_y','y_bg','y_text','zoom_readable','enhanced_readable','delta_threshold','conclusion','cell_notes','mode','orientation','DPR','viewport','screenshot_file','analysis_details'];
   const rows=[columns.map(csvValue).join(',')];
   for(const trial of allTrials())for(const cell of trial.cells){
     const row={...trial,...trial.environment,...cell,shot_delta_y:cell.analysis?.shot_delta_y,y_bg:cell.analysis?.y_bg,y_text:cell.analysis?.y_text,orientation:cell.diagnostics?.orientation,DPR:cell.diagnostics?.DPR,viewport:JSON.stringify(cell.diagnostics?.viewport),screenshot_file:cell.analysis?.file?.name,analysis_details:JSON.stringify(cell.analysis)};
@@ -186,6 +190,7 @@ document.addEventListener('visibilitychange',updateDiagnostics);
 async function init(){
   [manifest,samples]=await Promise.all(['assets/matrix-v1/manifest.json','assets/matrix-v1/samples.json'].map(async path=>{const response=await fetch(path);if(!response.ok)throw Error(`加载失败 ${path}`);return response.json();}));
   if(navigator.userAgentData){try{hints=await navigator.userAgentData.getHighEntropyValues(['platformVersion','model','fullVersionList']);}catch{hints=navigator.userAgentData.toJSON();}}
+  for(const trial of store.trials)trial.display_revision??='scroll-1';
   if(!store.active){
     const env=environment();env.platform=detectPlatform(ua,hints,navigator.maxTouchPoints);env.device=hints.model||'';
     env.browser=/Edg\//.test(ua)?'Edge':/Chrome\//.test(ua)?'Chrome':/Safari\//.test(ua)?'Safari':'请确认';
@@ -193,7 +198,11 @@ async function init(){
     if(env.platform==='Android'&&hints.platformVersion)env.os_version=`Android ${hints.platformVersion}`;
     store.active=makeTrial(env);
   }
+  if(active().display_revision!==DISPLAY_REVISION){
+    const prior=active();prior.display_revision??='scroll-1';
+    store.trials.push(prior);store.active=makeTrial({...prior.environment,ab_difference:'unknown'});
+  }
   for(const [key,value]of Object.entries(getEnv()))if(envForm.elements[key])envForm.elements[key].value=value;
-  renderMatrix();$('experiment').dataset.mode='hdr';renderProfile();selectCell(0);renderResults();updateDiagnostics();persist();
+  renderMatrix();$('experiment').dataset.mode='hdr';renderProfile();selectCell(17);renderResults();updateDiagnostics();persist();
 }
 init().catch(error=>{$('capability').textContent=`初始化失败：${error.message}。请刷新后重试。`;console.error(error);});

@@ -5,9 +5,10 @@
     "fixtures": "54/54 lossless decoded pixels and HDR metadata verified",
     "logic": "linear luminance, HDR exclusion, unreadable-source exclusion, zero-contrast controls, unknown Android version and CSV escaping passed",
     "browser": "Windows Codex in-app Chromium 153: all 54 AVIF images decoded, three view modes, cell selection, environment lock and trial history verified",
-    "mobile_layout": "390x844 emulated viewport: horizontal matrix scroll, no document horizontal overflow",
+    "mobile_layout": "flow-2: 390x844 Chromium viewport, responsive normal-flow grid; matrix and cards overflow visible; no document horizontal overflow",
     "screenshot_analysis": "synthetic 480x160 white SDR PNG: Y_bg=255, Y_text=255, delta=0; not a physical capture result",
-    "records_and_export": "reload retains trial history; JSON preview contains 2 synthetic trials / 2 records; CSV preview contains header and 2 records. Automatic download completion not observable in the in-app browser; explicit download link and copy fallback provided."
+    "records_and_export": "reload retains trial history; JSON preview contains 2 synthetic trials / 2 records; CSV preview contains header and 2 records. Automatic download completion not observable in the in-app browser; explicit download link and copy fallback provided.",
+    "hdr_isolation": "One-image legacy/B9 probe, identical-width plain/scroll layouts, computed range toggle, refresh retains selection; physical HDR output not measured"
   },
   "physical_results": [
     {
@@ -19,14 +20,27 @@
       "screen": "HDR content clearly readable, user reported",
       "sdr_screenshot": "text disappears, user reported; received JPEG central ROI was uniform white, original screenshot was not analyzed",
       "hdr_screenshot": "text retained, reported in supplied requirements",
-      "matrix_v1": "pending physical retest"
+      "matrix_v1": "scroll-1: user reports no visible HDR/SDR difference while legacy still works; flow-2 workaround pending physical retest"
     },
-    {"platform":"Windows 11 Edge/Chrome","matrix_v1":"pending physical HDR display and capture tests"},
-    {"platform":"Android 14 Chrome","matrix_v1":"pending physical tests"},
-    {"platform":"Android 15 Chrome","matrix_v1":"pending physical tests"},
-    {"platform":"Android 16 Chrome","matrix_v1":"pending physical tests"}
+    {
+      "platform": "Windows 11 Edge/Chrome",
+      "matrix_v1": "pending physical HDR display and capture tests"
+    },
+    {
+      "platform": "Android 14 Chrome",
+      "matrix_v1": "pending physical tests"
+    },
+    {
+      "platform": "Android 15 Chrome",
+      "matrix_v1": "pending physical tests"
+    },
+    {
+      "platform": "Android 16 Chrome",
+      "matrix_v1": "pending physical tests"
+    }
   ],
   "common_parameters": null,
   "platform_parameters": null,
-  "chat_component": "deferred until physical calibration results"
+  "chat_component": "deferred until physical calibration results",
+  "display_revision": "flow-2"
 }
