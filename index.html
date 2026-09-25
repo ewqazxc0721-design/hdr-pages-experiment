@@ -16,28 +16,33 @@ img{display:block;width:100%;height:auto;border-radius:9px;background:white}
 .grid{display:grid;grid-template-columns:1fr;gap:12px}
 pre{white-space:pre-wrap;background:#101012;padding:9px;border-radius:8px;font-size:12px}
 .sdrbox{background:#cbcbcb;color:#fff;border-radius:9px;padding:18px;font-size:24px;font-weight:800}
+button{font:inherit;color:#fff;background:#334361;border:1px solid #657796;border-radius:9px;padding:10px 14px;cursor:pointer;margin:4px 6px 8px 0}
+a{color:#a9cbff}.status{border-left:3px solid #e2b65e;padding:9px 12px;background:#25211a}
 @media(min-width:800px){.grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body><main>
 <h1>HDR → SDR Screenshot Collapse Lab</h1>
-<div class="muted">Safari 真机实验 · 目标：寻找“原屏清晰、SDR 截图不可读”的亮度窗口。</div>
-<div id="diag"></div>
+<div class="muted">Safari 真机实验 · v2：修复 HDR 色彩标记 · 2026-09-25</div>
+<p id="status" class="status" role="status">正在检查浏览器能力与图片加载状态……</p>
+<details><summary>设备诊断信息（可复制反馈）</summary><pre id="diag"></pre><button id="copy-diag" type="button">复制诊断信息</button><span id="copy-result" role="status"></span></details>
 
 <div class="warn">
-<b>测试前：</b>iPhone 设置 → 通用 → 屏幕捕捉 → 格式 → <b>SDR</b>。然后必须用 Safari 直接打开这个 HTTPS 页面。
+<b>先确认 HDR，再比较截图：</b>用 iOS 26 或更新版本的 Safari 打开本页，点击 A 区按钮切换 HDR / SDR，观察同一位置的亮度变化。检测为 true 只表示报告支持，不能证明屏幕实际启用了 HDR。确认有差异后，再将系统屏幕捕捉格式设为 SDR 测试。
 </div>
 
 <section class="card">
 <span class="badge">A · HDR / no-limit</span>
-<p>真正的 10-bit PQ / BT.2020 AVIF。背景固定约 203 nit；文字从 203 nit 扫到 1000 nit。</p>
-<img class="no-limit" src="./assets/hdr-pq-test.avif" alt="HDR luminance sweep">
+<p>已补全 BT.2020 / PQ 标记的 10 位 AVIF。原实验设计为背景约 203 nit、文字 203–1000 nit；这些是素材目标值，屏幕实际亮度未测量。</p>
+<button id="toggle-range" type="button" aria-pressed="false">切换 A 到 SDR 限制</button>
+<span id="range-label" aria-live="polite">A 当前：no-limit（请求 HDR）</span>
+<img id="hdr-image" class="no-limit" src="./assets/hdr-pq-test-tagged.avif" alt="HDR luminance sweep">
 </section>
 
 <section class="card">
 <span class="badge">B · 同一 HDR 文件 / standard</span>
 <p>同一个 AVIF，但要求 WebKit 把动态范围限制到 standard。用于和 A 肉眼比较。</p>
-<img class="standard" src="./assets/hdr-pq-test.avif" alt="SDR constrained luminance sweep">
+<img class="standard" src="./assets/hdr-pq-test-tagged.avif" alt="SDR constrained luminance sweep">
 </section>
 
 <section class="card">
@@ -51,25 +56,72 @@ pre{white-space:pre-wrap;background:#101012;padding:9px;border-radius:8px;font-s
 <p>只记录同时满足以下条件的亮度档：</p>
 <ol>
 <li>A 在 iPhone 原屏上无需费力即可阅读；</li>
-<li>B 明显比 A 弱，证明 HDR headroom 确实参与显示；</li>
+<li>A 在 no-limit 模式下比 standard 模式明显更亮，作为 HDR 参与显示的肉眼证据；</li>
 <li>系统 SDR 截图的 A 中，同一档文字消失或严重接近背景；</li>
 <li>把截图放大后仍无法恢复。</li>
 </ol>
-<p class="muted">如果截图中的 A 与原屏观感基本一致，则 HDR 路线淘汰。若只在某个范围出现坍缩，下一轮再围绕该范围做更细的 nit 扫描。</p>
+<p class="muted">如果 A 切换前后没有变化，本轮未确认 HDR 实际显示，不能据此判断截图实验。如果已确认 HDR，截图仍可读，则本轮没有实现预期效果；HDR 本身不保证截图中的文字消失。</p>
 </section>
+
+<details class="card"><summary>本次修复与原始素材</summary><p>原文件的色域和传递函数标记为“未指定”（2/2/9）。v2 在容器和 AV1 序列头中同时修复为 BT.2020 / PQ（9/16/9），仅改动 4 个字节，没有重新压缩像素。</p><p><a href="./assets/hdr-pq-test.avif">原始素材</a> · <a href="./assets/hdr-pq-test-tagged.avif">修复后素材</a> · <a href="https://webkit.org/blog/17333/webkit-features-in-safari-26-0/#hdr-images">WebKit HDR 图片支持说明</a></p></details>
 
 <script>
 const mq = window.matchMedia?.("(dynamic-range: high)");
-const diag = {
-  dynamicRangeHigh: mq ? mq.matches : "unsupported",
-  devicePixelRatio: window.devicePixelRatio,
-  viewport: `${innerWidth} × ${innerHeight}`,
-  userAgent: navigator.userAgent
-};
-document.getElementById("diag").innerHTML =
-  `<pre>dynamic-range: high = ${diag.dynamicRangeHigh}
-devicePixelRatio = ${diag.devicePixelRatio}
-viewport = ${diag.viewport}
-UA = ${diag.userAgent}</pre>`;
+const videoMq = window.matchMedia?.("(video-dynamic-range: high)");
+const hdrImage = document.getElementById("hdr-image");
+const toggle = document.getElementById("toggle-range");
+const supportsNoLimit = !!window.CSS?.supports("dynamic-range-limit", "no-limit");
+const supportsStandard = !!window.CSS?.supports("dynamic-range-limit", "standard");
+let limited = false;
+toggle.disabled = !(supportsNoLimit && supportsStandard);
+function refreshDiagnostics() {
+  const imageState = !hdrImage.complete ? "loading" : hdrImage.naturalWidth > 0 ? "decoded" : "failed";
+  const diag = {
+    version: "v2-cicp-fix",
+    dynamicRangeHigh: mq ? mq.matches : "unsupported",
+    videoDynamicRangeHigh: videoMq ? videoMq.matches : "unsupported",
+    supportsNoLimit, supportsStandard,
+    imageState,
+    imageSize: `${hdrImage.naturalWidth} × ${hdrImage.naturalHeight}`,
+    requestedRange: limited ? "standard" : "no-limit",
+    computedRange: getComputedStyle(hdrImage).getPropertyValue("dynamic-range-limit") || "unsupported",
+    actualHDR: "not measurable from this page; compare visually",
+    devicePixelRatio: window.devicePixelRatio,
+    viewport: `${innerWidth} × ${innerHeight}`,
+    userAgent: navigator.userAgent
+  };
+  document.getElementById("diag").textContent = JSON.stringify(diag, null, 2);
+  document.getElementById("status").textContent = imageState === "failed"
+    ? "图片解码或加载失败，尚不能进行 HDR 对比。请复制诊断信息反馈。"
+    : imageState === "loading"
+    ? "正在加载修复后的 HDR 图片……"
+    : !mq?.matches || !supportsNoLimit || !supportsStandard
+    ? "浏览器未报告完整的 HDR 对比能力。本轮不能确认 HDR 显示，请复制诊断信息反馈。"
+    : "图片已解码，浏览器报告支持 HDR。请切换 A 区按钮观察亮度变化；实际 HDR 输出仍需真机确认。";
+}
+toggle.addEventListener("click", () => {
+  limited = !limited;
+  hdrImage.className = limited ? "standard" : "no-limit";
+  toggle.setAttribute("aria-pressed", String(limited));
+  toggle.textContent = limited ? "切换 A 到 HDR 请求" : "切换 A 到 SDR 限制";
+  document.getElementById("range-label").textContent = limited
+    ? "A 当前：standard（限制为 SDR）" : "A 当前：no-limit（请求 HDR）";
+  refreshDiagnostics();
+});
+document.getElementById("copy-diag").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(document.getElementById("diag").textContent);
+    document.getElementById("copy-result").textContent = "已复制";
+  } catch {
+    document.getElementById("copy-result").textContent = "请长按上方诊断文字手动复制";
+  }
+});
+hdrImage.addEventListener("load", refreshDiagnostics);
+hdrImage.addEventListener("error", refreshDiagnostics);
+mq?.addEventListener?.("change", refreshDiagnostics);
+videoMq?.addEventListener?.("change", refreshDiagnostics);
+window.addEventListener("resize", refreshDiagnostics);
+document.addEventListener("visibilitychange", refreshDiagnostics);
+refreshDiagnostics();
 </script>
 </main></body></html>
