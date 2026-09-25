@@ -1,0 +1,31 @@
+{
+  "protocol": "matrix-v1",
+  "date": "2026-09-25",
+  "automated": {
+    "fixtures": "54/54 lossless decoded pixels and HDR metadata verified",
+    "logic": "linear luminance, HDR exclusion, unreadable-source exclusion, zero-contrast controls, unknown Android version and CSV escaping passed",
+    "browser": "Windows Codex in-app Chromium 153: all 54 AVIF images decoded, three view modes, cell selection, environment lock and trial history verified",
+    "mobile_layout": "390x844 emulated viewport: horizontal matrix scroll, no document horizontal overflow",
+    "screenshot_analysis": "synthetic 480x160 white SDR PNG: Y_bg=255, Y_text=255, delta=0; not a physical capture result"
+  },
+  "physical_results": [
+    {
+      "device": "iPhone 14 Pro",
+      "os": "iOS 27",
+      "browser": "Safari",
+      "protocol": "legacy-v2-single-image",
+      "source": "user report in conversation and supplied requirements",
+      "screen": "HDR content clearly readable, user reported",
+      "sdr_screenshot": "text disappears, user reported; received JPEG central ROI was uniform white, original screenshot was not analyzed",
+      "hdr_screenshot": "text retained, reported in supplied requirements",
+      "matrix_v1": "pending physical retest"
+    },
+    {"platform":"Windows 11 Edge/Chrome","matrix_v1":"pending physical HDR display and capture tests"},
+    {"platform":"Android 14 Chrome","matrix_v1":"pending physical tests"},
+    {"platform":"Android 15 Chrome","matrix_v1":"pending physical tests"},
+    {"platform":"Android 16 Chrome","matrix_v1":"pending physical tests"}
+  ],
+  "common_parameters": null,
+  "platform_parameters": null,
+  "chat_component": "deferred until physical calibration results"
+}

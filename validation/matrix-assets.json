@@ -1,0 +1,275 @@
+{
+  "checked_at": "2026-09-25T09:30:42.917Z",
+  "cells": [
+    {
+      "id": "A1",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A2",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A3",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A4",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A5",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A6",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A7",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A8",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "A9",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B1",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B2",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B3",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B4",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B5",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B6",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B7",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B8",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "B9",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C1",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C2",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C3",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C4",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C5",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C6",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C7",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C8",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "C9",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D1",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D2",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D3",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D4",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D5",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D6",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D7",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D8",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "D9",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E1",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E2",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E3",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E4",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E5",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E6",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E7",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E8",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "E9",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F1",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F2",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F3",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F4",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F5",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F6",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F7",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F8",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    },
+    {
+      "id": "F9",
+      "pixels_lossless": true,
+      "container_and_bitstream_hdr": true
+    }
+  ]
+}

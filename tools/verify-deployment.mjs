@@ -1,0 +1,23 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const base=process.argv[2]||'https://ewqazxc0721-design.github.io/hdr-pages-experiment/';
+const manifest=JSON.parse(await fs.readFile(path.join(root,'assets/matrix-v1/manifest.json'),'utf8'));
+const paths=['index.html','matrix.html','matrix.css','matrix.js','matrix-core.mjs','assets/matrix-v1/manifest.json','assets/matrix-v1/samples.json','assets/hdr-pq-test.avif','assets/hdr-pq-test-tagged.avif',...manifest.cells.map(c=>'assets/matrix-v1/'+c.file)];
+let checked=0;
+async function worker(){for(;;){const file=paths.shift();if(!file)return;
+ const response=await fetch(new URL(file+'?verify=matrix-v1',base),{signal:AbortSignal.timeout(30000)});
+ assert.equal(response.status,200,file);
+ const type=response.headers.get('content-type')||'';
+ if(file.endsWith('.avif'))assert.match(type,/image\/avif/,file);
+ if(/\.(m?js)$/.test(file))assert.match(type,/(java|ecma)script/,file);
+ if(file.endsWith('.html'))assert.match(type,/text\/html/,file);
+ const remote=Buffer.from(await response.arrayBuffer()),local=await fs.readFile(path.join(root,file));
+ assert.equal(createHash('sha256').update(remote).digest('hex'),createHash('sha256').update(local).digest('hex'),file);
+ checked++;
+}}
+await Promise.all(Array.from({length:4},worker));
+console.log(`PASS: ${checked} deployed resources HTTP 200, exact SHA-256 matches, AVIF and script MIME types correct.`);
