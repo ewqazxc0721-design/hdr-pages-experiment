@@ -20,7 +20,7 @@
       "screen": "HDR content clearly readable, user reported",
       "sdr_screenshot": "text disappears, user reported; received JPEG central ROI was uniform white, original screenshot was not analyzed",
       "hdr_screenshot": "text retained, reported in supplied requirements",
-      "matrix_v1": "scroll-1: user reports no visible HDR/SDR difference while legacy still works; flow-2 workaround pending physical retest"
+      "matrix_v1": "scroll-1: no visible A/B difference; after flow-2 user reports visible brightness changes and prefers B7/B8, with readable source and disappearing text in SDR screenshots of HDR content; qualitative results only"
     },
     {
       "platform": "Windows 11 Edge/Chrome",
@@ -37,10 +37,19 @@
     {
       "platform": "Android 16 Chrome",
       "matrix_v1": "pending physical tests"
+    },
+    {
+      "device": "iPad Pro 2022",
+      "chip": "M2",
+      "os": "iPadOS 27",
+      "screen_size": null,
+      "browser": null,
+      "matrix_v1": "user confirms C7/C8/C9 source clearly readable and SDR screenshot text disappears; qualitative results only"
     }
   ],
   "common_parameters": null,
   "platform_parameters": null,
   "chat_component": "deferred until physical calibration results",
-  "display_revision": "flow-2"
+  "display_revision": "flow-2",
+  "device_candidate_reports": "validation/device-candidates.json"
 }

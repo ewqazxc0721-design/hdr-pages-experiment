@@ -1,0 +1,69 @@
+{
+  "protocol": "matrix-v1",
+  "display_revision": "flow-2",
+  "reported_at": "2026-09-25",
+  "evidence": "qualitative user report; no new original screenshot or measured luminance supplied",
+  "reports": [
+    {
+      "device": "iPhone 14 Pro",
+      "os": "iOS 27",
+      "browser": "Safari",
+      "device_context_source": "earlier user reports in this conversation",
+      "hdr_sdr_change_visible": true,
+      "candidates": [
+        {
+          "id": "B7",
+          "background_target_nit": 203,
+          "text_target_nit": 600
+        },
+        {
+          "id": "B8",
+          "background_target_nit": 203,
+          "text_target_nit": 800
+        }
+      ],
+      "without_hdr": "text clearly readable, user reported",
+      "with_hdr_and_sdr_capture": "screenshot text disappears; user considers the effect satisfactory",
+      "screen_score": null,
+      "shot_delta_y": null,
+      "zoom_and_enhancement_recovery": "not reported",
+      "brightness_and_robustness_conditions": "not reported",
+      "status": "device-specific qualitative candidates, not metric-qualified results"
+    },
+    {
+      "device": "iPad Pro 2022",
+      "chip": "M2",
+      "os": "iPadOS 27",
+      "screen_size": null,
+      "browser": null,
+      "hdr_sdr_change_visible": null,
+      "candidates": [
+        {
+          "id": "C7",
+          "background_target_nit": 230,
+          "text_target_nit": 600
+        },
+        {
+          "id": "C8",
+          "background_target_nit": 230,
+          "text_target_nit": 800
+        },
+        {
+          "id": "C9",
+          "background_target_nit": 230,
+          "text_target_nit": 1000
+        }
+      ],
+      "source_screen": "clearly readable, user reported",
+      "with_hdr_and_sdr_capture": "screenshot text disappears, user reported",
+      "without_hdr": "not separately reported",
+      "screen_score": null,
+      "shot_delta_y": null,
+      "zoom_and_enhancement_recovery": "not reported",
+      "brightness_and_robustness_conditions": "not reported",
+      "status": "device-specific qualitative candidates, not metric-qualified results"
+    }
+  ],
+  "universal_parameters": null,
+  "next_experiment": "Compare B7/B8/C7/C8/C9 on each device with matched recorded conditions, separate source SDR readability, source HDR readability and SDR capture readability; test repeated captures and brightness/content-area changes before selecting defaults."
+}

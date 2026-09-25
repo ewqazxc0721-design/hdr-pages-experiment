@@ -31,4 +31,6 @@ Source inspected: https://github.com/WebKit/WebKit/blob/main/Source/WebCore/rend
 - Syntax checks and existing luminance / candidate exclusion / CSV logic tests pass.
 - The development display reports `dynamic-range: high = false`. These checks verify page behavior, not iPhone HDR output.
 
-Pending physical retest: first B9 in plain layout, then B9 in scrolling layout, then legacy in the same two layouts. If B9 still fails in plain layout while legacy succeeds, investigate Apple AVIF decoding / encoding compatibility next. If only live switching fails and full reload works, isolate repaint invalidation.
+Follow-up user report (2026-09-25): brightness changes are now visible. On iPhone, the user prefers B7/B8, reports clear text without HDR, and disappearing text in SDR captures of HDR content. No plain-versus-scroll paired result was supplied, so the exact compositor cause remains a hypothesis even though the revised display works in the user's test. The user also confirms iPad Pro 2022 (M2), iPadOS 27: C7/C8/C9 are clearly readable on screen and their text disappears in SDR screenshots. Display size and browser were not supplied. Structured observations: [device-candidates.json](device-candidates.json).
+
+Next physical work: verify B7/B8/C7/C8/C9 on each device with recorded screen brightness, original SDR captures, enlarged/enhanced inspection and repeated runs. Do not convert this qualitative report into numeric screen scores or measured screenshot deltas.

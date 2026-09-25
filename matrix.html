@@ -9,8 +9,8 @@
 <body>
 <main>
 <header><a href="./">← 已验证的 iPhone 单图实验</a><span class="eyebrow">CAPTURE LAB / MATRIX V1</span><h1>原屏可读，<br>截图还剩多少？</h1><p>6 档背景 × 9 档文字亮度。先评分，再截图，最后记录残留。</p><div class="chips"><span>54 个组合</span><span>10-bit · BT.2020 · PQ</span><span>纯网页 · 本地记录</span></div></header>
-<section class="notice"><strong>这是校准实验，没有“安全模式”。</strong>现有 iPhone 单图 SDR 截图效果已有用户实测；本矩阵和 Windows / Android 效果待验证。HDR 截图、拍屏、源码与网络读取仍可能保留内容。所有 nit 都是编码目标值，不是屏幕实测值。</section>
-<section class="notice"><strong>显示修订 flow-2：已移除矩阵内部滚动框。</strong>iPhone 反馈旧版正常、矩阵 A/B 无差异；本次绕开可疑的滚动合成路径，真机效果待复测。请先打开 <a href="./hdr-check.html?v=flow-2">HDR 隔离测试</a>，用 B9（203 / 1000 nit）确认亮度变化。旧记录保留；旧试次会归档，避免混用不同显示条件。</section>
+<section class="notice"><strong>这是校准实验，没有“安全模式”。</strong>iPhone 已有单图和矩阵的用户定性反馈；完整校准及 Windows / Android 效果待验证。HDR 截图、拍屏、源码与网络读取仍可能保留内容。所有 nit 都是编码目标值，不是屏幕实测值。</section>
+<section class="notice"><strong>显示修订 flow-2：已移除矩阵内部滚动框。</strong>更新后 iPhone 用户已确认亮度变化，B7 / B8 为实测候选；iPad Pro 2022 M2 用户确认 C7–C9 原屏清晰、SDR 截图文字消失。请先打开 <a href="./hdr-check.html?v=flow-2">HDR 隔离测试</a>，用 B9（203 / 1000 nit）确认亮度变化。旧记录保留；旧试次会归档，避免混用不同显示条件。<a href="./validation/device-candidates.json">查看设备候选记录</a>（用户定性反馈，尚未完成截图量化）。</section>
 <section class="panel"><div class="section-head"><h2>01 / 当前环境</h2><span id="profile" class="pill">识别中</span></div><p id="capability" role="status">正在加载素材和诊断信息……</p><details><summary>展开诊断：HDR、DPR、viewport、UA</summary><pre id="diagnostics"></pre></details><p class="small">设备、OS 版本和系统 HDR 状态请人工确认。浏览器能力报告与 UA 不能证明实际 HDR 输出；被简化的 Android UA 不用于判断 14 / 15 / 16。</p>
 <form id="environment-form"><fieldset id="environment-fields"><div class="form-grid">
 <label>设备型号<input name="device" placeholder="例如 iPhone 14 Pro" required></label>
