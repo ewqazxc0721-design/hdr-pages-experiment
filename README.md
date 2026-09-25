@@ -2,6 +2,8 @@
 
 纯静态 GitHub Pages 实验。
 
+最新交接：[HDR C9 聊天网页 Agent 接入说明](docs/HDR_C9_聊天网页Agent接入说明.md) · [暂定配置 hdr-c9-v1](docs/hdr-c9-v1.json)。用户指定背景 230 nit、文字 1000 nit，本轮只做 iOS / iPadOS 聊天网页接入，Windows / Android 暂停。C9 在 iPhone 上及完整聊天布局中的验证仍需完成。
+
 ## Cross-platform HDR Capture Calibration Matrix v1
 
 入口：[54 格矩阵](https://ewqazxc0721-design.github.io/hdr-pages-experiment/matrix.html)。
@@ -139,4 +141,4 @@ HDR 图像：
 
 这是设备相关的定性候选，未收到新原始截图、ΔY 或明确的 0–4 分评分，不写入自动判定的合格试次。详见 [结构化用户反馈](validation/device-candidates.json)。C 行提高的是背景目标亮度；同一列的文字目标亮度保持不变，不能笼统理解成“整体 HDR 更强”。
 
-下一轮先在两台设备交叉比较 B7/B8/C7/C8/C9，分别记录 SDR 直显、HDR 直显和 HDR 内容的 SDR 截图，再检查不同屏幕亮度和单格/多条内容条件。参数选择应先支持手工校准与保存设备配置，再依据复测结果考虑默认值。
+下一轮先在两台设备交叉比较 B7/B8/C7/C8/C9，分别记录 SDR 直显、HDR 直显和 HDR 内容的 SDR 截图，再检查不同屏幕亮度和单格/多条内容条件。后续按系统划分方案；当前用户已指定统一暂用 C9，不要求逐台设备手工校准。上表保留历史实测参数，不自动作为产品配置。

@@ -1,0 +1,33 @@
+{
+  "id": "hdr-c9-v1",
+  "status": "provisional_user_selected",
+  "selected_at": "2026-09-25",
+  "scope": ["iOS", "iPadOS"],
+  "background_nit": 230,
+  "text_nit": 1000,
+  "format": "avif",
+  "bit_depth": 10,
+  "pixel_format": "yuv444p10le",
+  "range": "full",
+  "cicp": [9, 16, 9],
+  "opaque": true,
+  "pq_y10_background": 607,
+  "pq_y10_text": 769,
+  "u10": 512,
+  "v10": 512,
+  "css_dynamic_range_limit": "no-limit",
+  "reference_asset": {
+    "path_in_handoff_bundle": "assets/C9-B230-T1000.avif",
+    "url": "https://ewqazxc0721-design.github.io/hdr-pages-experiment/assets/matrix-v1/C9-B230-T1000.avif",
+    "width": 480,
+    "height": 160,
+    "bytes": 2814,
+    "sha256": "a02271ebc34050eb284121819bf0b4afcc10aa8fadc640c4d69e3fdd6c9a5cb7"
+  },
+  "physical_evidence": {
+    "iPad_Pro_2022_M2_iPadOS_27": "C9 user-reported clear source and disappearing text in SDR screenshots",
+    "iPhone_14_Pro_iOS_27": "B7/B8 user-reported success; C9 explicit retest pending"
+  },
+  "chat_integration_verified": false,
+  "universal_screenshot_protection": false
+}
